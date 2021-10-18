@@ -6,7 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { CartModalPageModule } from '../cart-modal/cart-modal.module';
-import { ComponentsModule } from '../../components/components.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 
 @NgModule({

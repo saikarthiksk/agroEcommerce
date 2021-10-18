@@ -2,7 +2,8 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { Animation, AnimationController, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
-import { ProductService } from '../../services/product.service';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,9 @@ export class HomePage implements OnInit, AfterViewInit {
   cart = {};
   cartAnimation: Animation;
 
-  constructor(private productService: ProductService, private animationCtrl: AnimationController, private modalCtrl: ModalController) {}
+
+  constructor(private productService: ProductService, private animationCtrl: AnimationController, private modalCtrl: ModalController,
+    private afs: AngularFirestore) {}
 
   ngOnInit() {
     this.products = this.productService.getProducts();
