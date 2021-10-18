@@ -1,0 +1,65 @@
+
+.transparent-modal{
+  --background: #3a3a3a87!important;
+}
+.transparent-modal .modal-content {
+  background: #ffffff;
+  padding: 15px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.userProfileImage{
+  width: 88px;
+  height: 88px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.taskCompletedBtn{
+  width: 140px;
+  height: 25px;
+  background: #27AE60;
+  border-radius: 29px;
+}
+.rateYourExperience{
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+  opacity: 0.6;
+}
+.compilements{
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  letter-spacing: 0.01em;
+  color: #000000;
+  justify-content: center;
+}
+.stars{
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+}
+.statusButton{
+  background: #27AE60;
+  border-radius: 29px;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-content: baseline;
+  padding: 2px 10px;
+}

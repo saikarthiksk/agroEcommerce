@@ -9,7 +9,6 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let p of products | async" (click)="p.expanded = !p.expanded">
-
       <ion-thumbnail slot="start">
         <ion-img [src]="p.image"></ion-img>
       </ion-thumbnail>
@@ -19,6 +18,7 @@
         <p>{{ p.stock }} left</p>
         <div [hidden]="!p.expanded">
           {{ p.description }}
+          <app-star-review ></app-star-review>
         </div>
       </ion-label>
       <ion-row slot="end" class="ion-no-padding ion-align-items-center">
@@ -45,5 +45,5 @@
       <ion-icon name="cart"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-<!-- <button (click)="auth.signOut()">sign out</button> -->
+  <!-- <button (click)="auth.signOut()">sign out</button> -->
 </ion-content>

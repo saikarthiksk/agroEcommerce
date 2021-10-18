@@ -1,0 +1,7 @@
+<div class="stars">
+  <div class="" *ngFor="let dummy of ' '.repeat(5).split('') let i=index">
+    <ion-img src="./assets/icon/grayStar.png" *ngIf="stars==undefined||i>stars" (click)="check($event,i)"></ion-img>
+    <ion-img src="./assets/icon/yellowStar.png" *ngIf="i<=stars" (click)="check($event,i)"></ion-img>
+  </div>
+</div>
+<ion-button (click)="onSubmit($event)">Submit</ion-button>
