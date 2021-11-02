@@ -14,10 +14,14 @@ export class ProductService {
   cart = new BehaviorSubject({});
   cartKey = null;
   productsCollection: AngularFirestoreCollection;
+  ratings:AngularFirestoreCollection;
+  orders:AngularFirestoreCollection;
 
   constructor(private afs: AngularFirestore) {
     this.loadCart();
     this.productsCollection = this.afs.collection('products');
+    this.ratings = this.afs.collection('ratings');
+    this.orders = this.afs.collection('orders');
   }
 
   getProducts() {
@@ -39,7 +43,7 @@ export class ProductService {
     } else {
       // Start a new cart
       const fbDocument = await this.afs.collection('carts').add({
-        lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
+        lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
       });
       this.cartKey = fbDocument.id;
       // Store the document ID locally
@@ -81,11 +85,20 @@ removeFromCart(id) {
 
 async checkoutCart() {
   // Create an order
-  await this.afs.collection('orders').add(this.cart.value);
+
 
   // Clear old cart
   this.afs.collection('carts').doc(this.cartKey).set({
     lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
   });
  }
+
+  getRatings(){
+  return this.ratings.valueChanges({ idField: 'id' });
+ }
+
+  getOrders(){
+  return this.orders.valueChanges({ idField: 'id' });
+ }
+
 }

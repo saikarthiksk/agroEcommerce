@@ -18,7 +18,7 @@ export class FirebaseAuthService {
       const uid = res.user.uid;
       this.isLoggedIn = true
       localStorage.setItem('user',JSON.stringify(uid))
-      localStorage.setItem('userId',JSON.stringify(res.user.uid))
+      localStorage.setItem('userId',(res.user.uid))
     })
   }
   async signup(email: string, password : string){
@@ -27,6 +27,7 @@ export class FirebaseAuthService {
       this.isLoggedIn = true
       const uid = res.user.uid;
       localStorage.setItem('user',JSON.stringify(res.user))
+      localStorage.setItem('userId',JSON.stringify(uid))
       return this.afs.doc(
         `users/${uid}`
       ).set({
