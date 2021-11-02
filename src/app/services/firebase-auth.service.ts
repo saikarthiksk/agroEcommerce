@@ -17,7 +17,7 @@ export class FirebaseAuthService {
       console.log(res.user.uid);
       const uid = res.user.uid;
       this.isLoggedIn = true
-      localStorage.setItem('user',JSON.stringify(uid))
+      localStorage.setItem('user',JSON.stringify(res.user))
       localStorage.setItem('userId',(res.user.uid))
     })
   }
@@ -27,7 +27,7 @@ export class FirebaseAuthService {
       this.isLoggedIn = true
       const uid = res.user.uid;
       localStorage.setItem('user',JSON.stringify(res.user))
-      localStorage.setItem('userId',JSON.stringify(uid))
+      localStorage.setItem('userId',(uid))
       return this.afs.doc(
         `users/${uid}`
       ).set({
