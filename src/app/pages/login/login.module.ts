@@ -8,6 +8,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import { HomePageModule } from '../home/home.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { HomePageModule } from '../home/home.module';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    HomePageModule
+    HomePageModule,
+    ComponentsModule
   ],
   declarations: [LoginPage]
 })
