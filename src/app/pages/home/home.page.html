@@ -1,49 +1,167 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      Devdactic Shop
-    </ion-title>
-  </ion-toolbar>
+
+  <header class="header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="header__logo">
+            <a href="#" class="logo">AgroEcommerce</a>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="header__cart">
+            <ul *ngIf="cartLen!=undefined">
+              <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>{{cartLen.length}}</span></a></li>
+            </ul>
+            <div class="header__cart__price">item: <span>$150.00</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let p of products | async" (click)="p.expanded = !p.expanded">
-      <ion-thumbnail slot="start">
-        <ion-img [src]="p.image"></ion-img>
-      </ion-thumbnail>
-      <ion-label class="ion-text-wrap">
-        {{ p.title }}<br>
-        <b>{{ p.price | currency:'USD' }}</b>
-        <p>{{ p.stock }} left</p>
-        <div [hidden]="!p.expanded">
-          {{ p.description }}
-          <app-star-review ></app-star-review>
+  <section class="">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9">
+          <div class="hero__item set-bg" [ngStyle]="{backgroundImage:'url(assets/img/hero/banner.jpg)'}">
+            <div class="hero__text">
+              <span>FRUIT FRESH</span>
+              <h2>Vegetable <br />100% Organic</h2>
+              <a href="" class="primary-btn">SHOP NOW</a>
+            </div>
+          </div>
         </div>
-      </ion-label>
-      <ion-row slot="end" class="ion-no-padding ion-align-items-center">
-        <ion-col size="5">
-          <ion-button (click)="addToCart($event, p)" fill="clear">
-            <ion-icon name="add" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-col>
+      </div>
+    </div>
+  </section>
 
-        <ion-col size="2">
-          {{ cart[p.id] || 0 }}
-        </ion-col>
+  <div class="cropSeeds p-1 mg10">
+    <div lines="none" class="d-flex  justify-content-between  align-items-center pd-5">
+      <div>
+        <ion-text class="headings">Categories</ion-text>
+      </div>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds" (click)="route('Seeds')">
+        <ion-img class="seedsImg" src="assets/img/seeds/organic.jpg"></ion-img>
+        <p>Crop Seeds</p>
+      </div>
+      <div class="seeds" (click)="route('Seeds')">
+        <ion-img class="seedsImg" src="assets/img/forage.png"></ion-img>
+        <p>Forage Seeds</p>
+      </div>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds" (click)="route('Seeds')">
+        <ion-img class="seedsImg" src="assets/img/seeds/tomato.jpg"></ion-img>
+        <p>Vegatables Seeds</p>
+      </div>
+      <div class="seeds" (click)="route('Machines')">
+        <ion-img class="seedsImg" src="assets/img/spray.jpg"></ion-img>
+        <p>Spray parts</p>
+      </div>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds">
+        <ion-img class="seedsImg" src="assets/img/categories/cat-1.jpg"></ion-img>
+        <p>Fruits</p>
+      </div>
+      <div class="seeds" (click)="route('Vegetables')">
+        <ion-img class="seedsImg" src="assets/img/categories/cat-3.jpg"></ion-img>
+        <p>Vegatables</p>
+      </div>
+    </div>
+  </div>
 
-        <ion-col size="5">
-          <ion-button (click)="removeFromCart($event, p)" fill="clear" [disabled]="!cart[p.id] || cart[p.id] == 0">
-            <ion-icon name="remove" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-item>
-  </ion-list>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="openCart()" color="secondary" #myfab>
-      <ion-icon name="cart"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <!-- <button (click)="auth.signOut()">sign out</button> -->
+  <div class="cropSeeds p-1 mg10">
+    <div lines="none" class="d-flex  justify-content-between  align-items-center pd-5">
+      <div>
+        <ion-text class="headings">Crop Seeds</ion-text>
+        <p>Hybrids & improved seeds</p>
+      </div>
+      <button slot="end" class="viewAll">View All</button>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds">
+        <ion-img class="seedsImg" src="assets/img/seeds/organic.jpg"></ion-img>
+        <p>organic</p>
+      </div>
+      <div class="seeds">
+        <ion-img class="seedsImg" src="assets/img/seeds/organic.jpg"></ion-img>
+        <p>organic</p>
+      </div>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds">
+        <ion-img class="seedsImg" src="assets/img/seeds/peas.jpg"></ion-img>
+        <p>Peas</p>
+      </div>
+      <div class="seeds">
+        <ion-img class="seedsImg" src="assets/img/seeds/tomato.jpg"></ion-img>
+        <p>Tomato</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cropSeeds p-1 mg10">
+    <div lines="none" class="d-flex  justify-content-between  align-items-center my-2 pd-5">
+      <div>
+        <ion-text class="headings">Vegetables</ion-text>
+      </div>
+      <button slot="end" class="viewAll">View All</button>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds">
+        <ion-img src="assets/img/vegetables/Greencollard.jpg"></ion-img>
+        <p class="vegetablesText">Green collard</p>
+      </div>
+      <div class="seeds">
+        <ion-img src="assets/img/vegetables/Onion-Yellow.jpg"></ion-img>
+        <p class="vegetablesText">Yellow onion</p>
+      </div>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds">
+        <ion-img src="assets/img/vegetables/garlic.jpg"></ion-img>
+        <p class="vegetablesText">Garlic</p>
+      </div>
+      <div class="seeds">
+        <ion-img src="assets/img/vegetables/Brinjal.jpg"></ion-img>
+        <p class="vegetablesText">Brinjal </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cropSeeds p-1 mg10">
+    <div lines="none" class="d-flex  justify-content-between  align-items-center my-2 pd-5">
+      <div>
+        <ion-text class="headings">Machinary</ion-text>
+      </div>
+      <button slot="end" class="viewAll">View All</button>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds">
+        <ion-img src="assets/img/machines/engine.png"></ion-img>
+        <p class="vegetablesText">Engine</p>
+      </div>
+      <div class="seeds">
+        <ion-img src="assets/img/machines/spraypump.png"></ion-img>
+        <p class="vegetablesText">Spray pump</p>
+      </div>
+    </div>
+    <div lines="none" class="d-flex justify-content-center">
+      <div class="seeds">
+        <ion-img src="assets/img/machines/trolley.png"></ion-img>
+        <p class="vegetablesText">Trolley</p>
+      </div>
+      <div class="seeds">
+        <ion-img src="assets/img/machines/RotoSeedDrill.png"></ion-img>
+        <p class="vegetablesText">Roto Seed Drill </p>
+      </div>
+    </div>
+  </div>
+
 </ion-content>

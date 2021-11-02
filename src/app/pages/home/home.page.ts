@@ -4,63 +4,54 @@ import { Observable } from 'rxjs';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { ProductService } from 'src/app/services/product.service';
+import { NavigationExtras, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
+import { Products } from 'src/app/models/products';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, AfterViewInit {
-  products: Observable<any[]>;
+
+export class HomePage implements OnInit {
+
   @ViewChild('myfab', { read: ElementRef }) carBtn: ElementRef;
   cart = {};
-  cartAnimation: Animation;
+  cartLen=[];
+  products;
 
-
-  constructor(private productService: ProductService, private animationCtrl: AnimationController, private modalCtrl: ModalController,
-    private afs: AngularFirestore) {}
+  constructor(
+    private productService: ProductService,
+    private modalCtrl: ModalController,
+    private afs: AngularFirestore,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.products = this.productService.getProducts();
-    console.log(this.products);
-
-    // Listen to Cart changes
-    this.productService.cart.subscribe(value => {
+    this.productService.cart.subscribe((value) => {
       this.cart = value;
     });
+    const cartItems = this.productService.cart.value;
+    this.productService
+      .getProducts()
+      .pipe(take(1))
+      .subscribe((allProducts) => {
+        this.cartLen = allProducts
+          .filter((p) => cartItems[p.id])
+          .map((product) => {
+            return { ...product, count: cartItems[product.id] };
+          });
+      });
   }
 
-  ngAfterViewInit() {
-    // Setup an animation that we can reuse
-    this.cartAnimation = this.animationCtrl.create('cart-animation');
-    this.cartAnimation
-    .addElement(this.carBtn.nativeElement)
-    .keyframes([
-      { offset: 0, transform: 'scale(1)' },
-      { offset: 0.5, transform: 'scale(1.2)' },
-      { offset: 0.8, transform: 'scale(0.9)' },
-      { offset: 1, transform: 'scale(1)' }
-    ])
-    .duration(300)
-    .easing('ease-out');
-  }
-
-  addToCart(event, product) {
-    event.stopPropagation();
-    this.productService.addToCart(product.id);
-    this.cartAnimation.play();
-  }
-
-  removeFromCart(event, product) {
-    event.stopPropagation();
-    this.productService.removeFromCart(product.id);
-    this.cartAnimation.play();
-  }
-
-  async openCart() {
-    const modal = await this.modalCtrl.create({
-      component: CartModalPage
-    });
-    await modal.present();
+  route(data) {
+    const extra: NavigationExtras = {
+      state: {
+        category: data,
+      },
+    };
+    this.router.navigate(['products'], extra);
   }
 }
