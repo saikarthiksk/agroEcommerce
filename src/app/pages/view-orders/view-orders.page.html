@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>view-orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let p of products | async">
+    <div *ngIf="p.uid==userId">{{p.productId}}</div>
+  </div>
+</ion-content>
