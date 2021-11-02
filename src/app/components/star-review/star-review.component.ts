@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
@@ -7,7 +7,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./star-review.component.scss'],
 })
 export class StarReviewComponent implements OnInit {
+
+  @Input('id')id;
   stars;
+  review;
   constructor(private afs: AngularFirestore) {
    }
 
@@ -21,10 +24,10 @@ export class StarReviewComponent implements OnInit {
   }
  async onSubmit(event){
     event.stopPropagation();
-
     const fbDocument = await this.afs.collection('ratings').add({
-      productId:'7',
-      star:this.stars
+      productId:this.id,
+      star:this.stars,
+      review:this.review
     });
   }
 }
