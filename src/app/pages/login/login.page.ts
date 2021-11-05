@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
 @Component({
@@ -9,13 +10,17 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
+  createNewAcc=false;
   title = 'firebase-angular-auth';
   isSignedIn = false;
+  email;
+  password;
+  username;
   constructor(
     private firebaseService: FirebaseAuthService,
     private auth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private alert:AlertController
   ) {}
   ngOnInit() {
     if (localStorage.getItem('user') !== null) {
@@ -26,7 +31,11 @@ export class LoginPage implements OnInit {
       this.isSignedIn = false;
   }
 
-  async onSignup(email: string, password: string) {
+  async onSignup(email: string, password: string,username:string) {
+    localStorage.setItem('username',(username))
+    let data = localStorage.getItem('username');
+    console.log(data);
+
     await this.firebaseService.signup(email, password);
     if (this.firebaseService.isLoggedIn)
     {
@@ -45,5 +54,8 @@ export class LoginPage implements OnInit {
 
   handleLogout() {
     this.isSignedIn = false;
+  }
+  openSignUpPAge(){
+    this.createNewAcc=true;
   }
 }

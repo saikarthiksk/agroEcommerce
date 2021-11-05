@@ -1,22 +1,60 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="p-2">Get Started</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div *ngIf="!isSignedIn">
-    <h2>Sign up</h2>
-    <input type="text" #emailSignup/>
-    <input type="text" #passwordSignup/>
-    <button (click)="onSignup(emailSignup.value,passwordSignup.value)">Sign up</button>
+  <div class="container">
+    <input type="checkbox" id="flip">
+    <div class="forms">
+      <div class="form-content">
+        <div class="login-form" joyrideStep="step10" title="Login" text="You should enter the login details for placing an order" >
+          <div class="title">Login</div>
+          <form action="#">
+            <div class="input-boxes">
+              <div class="input-box">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input  [(ngModel)]="email" name="emailAddress" type="text" placeholder="Enter your email" required>
+              </div>
+              <div class="input-box">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" name="pass"  [(ngModel)]="password" placeholder="Enter your password" required>
+              </div>
+              <div class="button input-box">
+                <input type="submit" value="Sumbit" (click)="onSignin(email,password)">
+              </div>
+              <div class="text sign-up-text" joyrideStep="step11" title="Don't have an account? " text="Click here to signup" >Don't have an account? <label for="flip">Sigup now</label></div>
+            </div>
+          </form>
+        </div>
+        <div class="signup-form">
+          <div class="title">Signup</div>
+          <form action="#">
+            <div class="input-boxes">
+              <div class="input-box">
+                <ion-icon name="person-outline"></ion-icon>
+                <input type="text"   [(ngModel)]="username"  name="Username" placeholder="Enter your name" required>
+              </div>
+              <div class="input-box">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input type="text"  [(ngModel)]="email" name="emailAddress" placeholder="Enter your email" required>
+              </div>
+              <div class="input-box">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" name="pass"  [(ngModel)]="password"placeholder="Enter your password" required>
+              </div>
+              <div class="button input-box">
+                <input type="submit" value="Sumbit" (click)="onSignup(email,password,username)">
+              </div>
+              <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  <hr>
-  <div *ngIf="!isSignedIn">
-    <h2>Sign In</h2>
-    <input type="text" #email/>
-    <input type="text" #password/>
-    <button (click)="onSignin(email.value,password.value)">Sign in</button>
-  </div>
-  <!-- <app-home *ngIf="isSignedIn" (isLogout)="handleLogout()"></app-home> -->
 </ion-content>

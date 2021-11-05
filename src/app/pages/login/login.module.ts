@@ -9,6 +9,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
 import { HomePageModule } from '../home/home.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { JoyrideModule } from 'ngx-joyride';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     IonicModule,
     LoginPageRoutingModule,
     HomePageModule,
-    ComponentsModule
+    ComponentsModule,
+    JoyrideModule.forChild()
+
   ],
   declarations: [LoginPage]
 })
