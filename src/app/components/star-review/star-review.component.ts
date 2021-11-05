@@ -23,11 +23,13 @@ export class StarReviewComponent implements OnInit {
        this.stars = i ;
   }
  async onSubmit(event){
+    let username=await localStorage.getItem('username')
     event.stopPropagation();
     const fbDocument = await this.afs.collection('ratings').add({
+      user:username,
       productId:this.id,
-      star:this.stars,
       review:this.review
     });
+    this.review='';
   }
 }

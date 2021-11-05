@@ -1,8 +1,11 @@
 <div class="stars">
-  <div class="" *ngFor="let dummy of ' '.repeat(5).split('') let i=index">
+  <!-- <div class="" *ngFor="let dummy of ' '.repeat(5).split('') let i=index">
     <ion-img src="./assets/icon/grayStar.png" *ngIf="stars==undefined||i>stars" (click)="check($event,i)"></ion-img>
     <ion-img src="./assets/icon/yellowStar.png" *ngIf="i<=stars" (click)="check($event,i)"></ion-img>
-  </div>
-  <ion-input [(ngModel)]="review"   placeholder="Write your review"></ion-input>
+  </div> -->
 </div>
-<ion-button (click)="onSubmit($event)">Submit</ion-button>
+<ion-item class="input-box" lines="none">
+  <ion-input [(ngModel)]="review" class="review" (keyup.enter)="onSubmit($event)" placeholder="Add your review here">
+  </ion-input>
+  <ion-icon name="arrow-forward-outline" (click)="onSubmit($event)" (keyup.enter)="onSubmit($event)"  slot="end"></ion-icon>
+</ion-item>
