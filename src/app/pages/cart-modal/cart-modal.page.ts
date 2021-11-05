@@ -13,7 +13,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class CartModalPage implements OnInit {
   products;
-
+  cart={};
+  savedProducts=[];
+  totalPrice=0;
   constructor(
     private productService: ProductService,
     private modalCtrl: ModalController,
@@ -21,7 +23,9 @@ export class CartModalPage implements OnInit {
     private router: Router,
     private afs: AngularFirestore
   ) {}
-  ngOnInit() {
+
+   ngOnInit()
+  {
     const cartItems = this.productService.cart.value;
     this.productService
       .getProducts()
@@ -30,31 +34,25 @@ export class CartModalPage implements OnInit {
         this.products = allProducts
           .filter((p) => cartItems[p.id])
           .map((product) => {
+            this.totalPrice=this.totalPrice+(product.price*cartItems[product.id]);
             return { ...product, count: cartItems[product.id] };
           });
       });
+      console.log(this.totalPrice);
+  }
+
+
+   calculatePrice() {
+    for (let index = 0; index < this.savedProducts.length; index++) {
+      this.totalPrice += this.savedProducts[index].price;
+    }
   }
 
   async checkout() {
     let data = localStorage.getItem('userId');
     if (localStorage.getItem('user') !== null) {
-      for (let index = 0; index < this.products.length; index++) {
-        const fbDocument = await this.afs.collection('orders').add({
-          productId: this.products[index].id,
-          image: this.products[index].image,
-          title:this.products[index].title,
-          price:this.products[index].price,
-          uid: data,
-        });
-      }
-      this.productService.checkoutCart();
-      const alert = await this.alertCtrl.create({
-        header: 'Success',
-        message: 'Thanks for your order',
-        buttons: ['Continue shopping'],
-      });
-      await alert.present();
       this.modalCtrl.dismiss();
+      this.router.navigate(['checkout']);
     } else {
       this.modalCtrl.dismiss();
       this.router.navigate(['login']);
@@ -62,6 +60,16 @@ export class CartModalPage implements OnInit {
   }
 
   close() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss(null , 'cancel');
+  }
+
+  addToCart(event, product) {
+    event.stopPropagation();
+    this.productService.addToCart(product.id);
+  }
+
+  removeFromCart(event, product) {
+    event.stopPropagation();
+    this.productService.removeFromCart(product.id);
   }
 }

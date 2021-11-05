@@ -10,20 +10,42 @@
 </ion-header>
 
 <ion-content>
-<ion-list>
-  <ion-item *ngFor="let p of products">
-    <p slot="start">
-      {{ p.count }}x
-    </p>
-    <ion-label>
-      {{ p.title }}
-    </ion-label>
+  <ion-list>
+    <div *ngFor="let p of products">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="p.image"></ion-img>
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap">
+          <p>{{p.category}}</p>
+          {{ p.title }}<br>
+          <b>{{ p.price | currency:'INR' }}</b>
+        </ion-label>
+        <ion-row slot="end" class="ion-no-padding ion-align-items-center">
+          <ion-col size="5">
+            <ion-button (click)="addToCart($event, p)" fill="clear">
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-col>
 
-    <ion-avatar slot="end">
-      <ion-img [src]="p.image"></ion-img>
-    </ion-avatar>
+          <ion-col size="2">
+            {{ p.count }}
+          </ion-col>
+
+          <ion-col size="5">
+            <ion-button (click)="removeFromCart($event, p)" fill="clear" [disabled]="p.count==0">
+              <ion-icon name="remove" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </div>
+  </ion-list>
+  <div *ngIf="totalPrice==0" class="d-flex justify-content-center noCartItems">Your cart is empty!</div>
+  <ion-item class="d-flex justify-content-between" class="totalPrice" *ngIf="totalPrice!=0">
+    <div slot="start">Total Cart Price </div>
+    <div slot="end">{{totalPrice | currency:'INR' }} </div>
   </ion-item>
-</ion-list>
 </ion-content>
 
 <ion-footer>
