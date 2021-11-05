@@ -7,6 +7,7 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { CartModalPageModule } from '../cart-modal/cart-modal.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { JoyrideModule } from 'ngx-joyride';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     IonicModule,
     HomePageRoutingModule,
     CartModalPageModule,
-    ComponentsModule
+    ComponentsModule,
+    JoyrideModule.forChild()
   ],
   declarations: [HomePage]
 })
