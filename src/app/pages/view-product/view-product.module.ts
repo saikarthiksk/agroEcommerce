@@ -8,6 +8,7 @@ import { ViewProductPageRoutingModule } from './view-product-routing.module';
 
 import { ViewProductPage } from './view-product.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { JoyrideModule } from 'ngx-joyride';
 
 @NgModule({
   imports: [
@@ -15,7 +16,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     ViewProductPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    JoyrideModule.forChild()
+
   ],
   declarations: [ViewProductPage]
 })

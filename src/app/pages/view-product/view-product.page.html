@@ -3,19 +3,20 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
+    <ion-title>{{product.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="product!=undefined">
   <ion-card>
     <ion-card-header>
       <img class="newsImage" [src]="product.image">
       <h3>{{product.title}}</h3>
+      <h4> Price : {{product.price | currency:'INR' }}</h4>
     </ion-card-header>
-  </ion-card>
 
   <ion-item>
-    <p>Quantity</p>
+    <ion-text>Quantity</ion-text>
     <ion-row slot="end" class="ion-no-padding ion-align-items-center">
       <ion-col size="5">
         <ion-button (click)="addToCart($event, product)" fill="clear">
@@ -35,9 +36,28 @@
       </ion-col>
     </ion-row>
   </ion-item>
-  <app-star-review [id]="product.id"></app-star-review>
-  <div *ngFor="let r of ratings | async">
-    <div *ngIf="r.productId==product.id">{{r.star}}</div>
-    <div *ngIf="r.productId==product.id">{{r.review}}</div>
+  <div  *ngFor="let r of ratings | async  let i=index" class=" pd10">
+    <h2 *ngIf="r.length!=0&&i==0">Reviews</h2>
+    <div class="">
+      <div *ngIf="r.productId==product.id" class="d-flex align-items-center reviewHeader">
+        <ion-icon name="person-outline" class="img"></ion-icon>
+        <div  class=""> {{r.user}}</div>
+      </div>
+      <div *ngIf="r.productId==product.id" class="message">{{r.review}} </div>
+    </div>
   </div>
+  <app-star-review [id]="product.id" joyrideStep="step9" title="Review" text="You can add your review here" ></app-star-review>
+</ion-card>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="success">
+    <ion-button expand="full" (click)="openCart()" fill="clear" color="light" >
+      Go to cart
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-content *ngIf="product==undefined">
+
 </ion-content>

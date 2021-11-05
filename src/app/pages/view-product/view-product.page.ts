@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { Products } from 'src/app/models/products';
 import { ProductService } from 'src/app/services/product.service';
+import { CartModalPage } from '../cart-modal/cart-modal.page';
 
 @Component({
   selector: 'app-view-product',
@@ -14,13 +16,16 @@ export class ViewProductPage implements OnInit {
   product:Products;
   ratings;
   constructor(private router:Router,
-    private productService:ProductService) {
-    if(this.router.getCurrentNavigation().extras.state.product){
-      this.product=this.router.getCurrentNavigation().extras.state.product;
-    }
-    else{
-      this.router.navigate(['products'])
-    }
+    private route:ActivatedRoute,
+    private productService:ProductService,
+    private modalCtrl: ModalController,
+    ) {
+      this.route.queryParams.subscribe((params) => {
+      if(this.router.getCurrentNavigation().extras.state.product){
+        this.product=this.router.getCurrentNavigation().extras.state.product;
+      }
+    });
+
    }
 
   ngOnInit() {
@@ -28,6 +33,15 @@ export class ViewProductPage implements OnInit {
     this.productService.cart.subscribe((value) => {
       this.cart = value;
     });
+    if(this.product==undefined){
+      this.product={
+        id:1,
+        category:'Seeds',
+        price:200,
+        image:'assets/img/seeds/peas.jpg',
+        title:'Peas'
+      }
+    }
   }
 
   addToCart(event, product) {
@@ -40,4 +54,10 @@ export class ViewProductPage implements OnInit {
     this.productService.removeFromCart(product.id);
   }
 
+  async openCart() {
+    const modal = await this.modalCtrl.create({
+      component: CartModalPage,
+    });
+    await modal.present();
+  }
 }
