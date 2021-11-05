@@ -8,17 +8,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from "src/environments/environment";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JoyrideModule } from 'ngx-joyride';
 
 const firebaseConfig = [
   AngularFireAuthModule,
-  AngularFireModule.initializeApp(environment.firebase) // Your config
+  AngularFireModule.initializeApp(environment.firebase), // Your config
 ];
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
     firebaseConfig,
-    AngularFirestoreModule],
+    AngularFirestoreModule,
+    BrowserAnimationsModule,
+    JoyrideModule.forRoot(),
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

@@ -39,6 +39,14 @@ const routes: Routes = [
     path: 'view-orders',
     loadChildren: () => import('./pages/view-orders/view-orders.module').then( m => m.ViewOrdersPageModule)
   },
+  {
+    path: 'checkout',
+    loadChildren: () => import('./pages/checkout/checkout.module').then( m => m.CheckoutPageModule)
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
+  },
 
 ];
 
