@@ -4,6 +4,7 @@ import { CartModalPage } from '../cart-modal/cart-modal.page';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { ProductService } from 'src/app/services/product.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Products } from 'src/app/models/products';
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
@@ -15,6 +16,7 @@ export class ProductsPage implements OnInit {
   cart = {};
   cartAnimation: Animation;
   category;
+
   constructor(
     private productService: ProductService,
     private animationCtrl: AnimationController,
@@ -25,45 +27,49 @@ export class ProductsPage implements OnInit {
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.category = this.router.getCurrentNavigation().extras.state.category;
+        this.category =this.router.getCurrentNavigation().extras.state.category;
       }
     });
   }
 
   ngOnInit() {
-    this.products = this.productService.getProducts();
-    console.log(this.products);
+    if(this.category!=undefined){
+      this.productService.getProducts().subscribe((res) => {
+        this.products = res;
+      });
+    }
     // Listen to Cart changes
     this.productService.cart.subscribe((value) => {
       this.cart = value;
     });
-  }
-
-  ngAfterViewInit() {
-    // Setup an animation that we can reuse
-    // this.cartAnimation = this.animationCtrl.create('cart-animation');
-    // this.cartAnimation
-    // .addElement(this.carBtn.nativeElement)
-    // .keyframes([
-    //   { offset: 0, transform: 'scale(1)' },
-    //   { offset: 0.5, transform: 'scale(1.2)' },
-    //   { offset: 0.8, transform: 'scale(0.9)' },
-    //   { offset: 1, transform: 'scale(1)' }
-    // ])
-    // .duration(300)
-    // .easing('ease-out');
+    if (this.category == undefined) {
+      this.products = [
+        {
+          id: 1,
+          category: 'Seeds',
+          price: 200,
+          image: 'assets/img/seeds/peas.jpg',
+          title: 'Peas',
+        },
+        {
+          id: 1,
+          category: 'Seeds',
+          price: 200,
+          image: 'assets/img/seeds/tomato.jpg',
+          title: 'tomato',
+        },
+      ];
+    }
   }
 
   addToCart(event, product) {
     event.stopPropagation();
     this.productService.addToCart(product.id);
-    // this.cartAnimation.play();
   }
 
   removeFromCart(event, product) {
     event.stopPropagation();
     this.productService.removeFromCart(product.id);
-    // this.cartAnimation.play();
   }
 
   async openCart() {
@@ -73,12 +79,32 @@ export class ProductsPage implements OnInit {
     await modal.present();
   }
 
-  openProductPage(item){
-    const navExtra:NavigationExtras={
-      state:{
-        product:item
+  openProductPage(item) {
+    const navExtra: NavigationExtras = {
+      state: {
+        product: item,
+      },
+    };
+    this.router.navigate(['view-product'], navExtra);
+  }
+
+  async filterList(evt) {
+    const searchTerm = evt.srcElement.value;
+    let data;
+    this.productService.getProducts().subscribe((res) => {
+      data = res;
+      data = data.filter((data) => data.category == this.category);
+      if (!searchTerm) {
+        this.products = data;
+      } else {
+        this.products = data.filter((product) => {
+          if (product.title && searchTerm) {
+            return (
+              product.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+            );
+          }
+        });
       }
-    }
-    this.router.navigate(['view-product'],navExtra);
+    });
   }
 }
