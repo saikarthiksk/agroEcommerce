@@ -100,5 +100,4 @@ async checkoutCart() {
   getOrders(){
   return this.orders.valueChanges({ idField: 'id' });
  }
-
 }
