@@ -11,11 +11,19 @@ export class ViewOrdersPage implements OnInit {
   constructor(private productService:ProductService) { }
   products;
   userId=localStorage.getItem('userId');
-
-  ngOnInit() {
-    this.products = this.productService.getOrders();
-    console.log(this.products);
-
+  data=false;
+  async ngOnInit() {
+     this.productService.getOrders().subscribe((res)=>{
+      this.products=(res);
+      let len=this.products.length;
+      for (let index = 0; index < len; index++) {
+        const element = this.products[index].uid;
+        if(this.userId==element){
+          this.data=true;
+          break;
+        }
+      }
+    });
   }
 
 }

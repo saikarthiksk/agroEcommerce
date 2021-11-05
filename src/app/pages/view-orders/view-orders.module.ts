@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { ViewOrdersPageRoutingModule } from './view-orders-routing.module';
 
 import { ViewOrdersPage } from './view-orders.page';
+import { JoyrideModule } from 'ngx-joyride';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewOrdersPageRoutingModule
+    ViewOrdersPageRoutingModule,
+    JoyrideModule.forChild()
+
   ],
   declarations: [ViewOrdersPage]
 })
