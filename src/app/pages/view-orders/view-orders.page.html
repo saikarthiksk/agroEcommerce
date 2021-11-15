@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="headerTitle" slot="start">My orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="data!=false">
+    <div  *ngFor="let p of products"  >
+      <ion-item *ngIf="p.uid==userId">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="p.image"></ion-img>
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap">
+          <p>{{p.category}}</p>
+          {{ p.title }}<br>
+          <b>{{ p.price | currency:'INR' }}</b>
+        </ion-label>
+      </ion-item>
+    </div>
+  </ion-list>
+  <div *ngIf="data==false" class="d-flex justify-content-center noOrders">Oops no orders found!</div>
+</ion-content>

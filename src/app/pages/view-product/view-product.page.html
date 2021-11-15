@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{product.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="product!=undefined">
+  <ion-card>
+    <ion-card-header>
+      <img class="newsImage" [src]="product.image">
+      <h3>{{product.title}}</h3>
+      <h4> Price : {{product.price | currency:'INR' }}</h4>
+    </ion-card-header>
+
+  <ion-item>
+    <ion-text>Quantity</ion-text>
+    <ion-row slot="end" class="ion-no-padding ion-align-items-center">
+      <ion-col size="5">
+        <ion-button (click)="addToCart($event, product)" fill="clear">
+          <ion-icon name="add" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="2">
+        {{ cart[product.id] || 0 }}
+      </ion-col>
+
+      <ion-col size="5">
+        <ion-button (click)="removeFromCart($event, product)" fill="clear"
+          [disabled]="!cart[product.id] || cart[product.id] == 0">
+          <ion-icon name="remove" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+  <div  *ngFor="let r of ratings | async  let i=index" class=" pd10">
+    <h2 *ngIf="r.length!=0&&i==0">Reviews</h2>
+    <div class="">
+      <div *ngIf="r.productId==product.id" class="d-flex align-items-center reviewHeader">
+        <ion-icon name="person-outline" class="img"></ion-icon>
+        <div  class=""> {{r.user}}</div>
+      </div>
+      <div *ngIf="r.productId==product.id" class="message">{{r.review}} </div>
+    </div>
+  </div>
+  <app-star-review [id]="product.id" joyrideStep="step9" title="Review" text="You can add your review here" ></app-star-review>
+</ion-card>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="success">
+    <ion-button expand="full" (click)="openCart()" fill="clear" color="light" >
+      Go to cart
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-content *ngIf="product==undefined">
+
+</ion-content>

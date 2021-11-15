@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="headerTitle" slot="start" *ngIf="category!=undefined">{{category}}</ion-title>
+    <ion-title class="headerTitle" slot="start" *ngIf="category==undefined">Products</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+  <ion-content *ngIf="category!=undefined">
+    <ion-searchbar showcancelbutton="" (ionInput)="filterList($event)"></ion-searchbar>
+    <ion-list >
+      <div  *ngFor="let p of products"  >
+        <ion-item *ngIf="p.category==category"(click)="openProductPage(p)">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="p.image"></ion-img>
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap">
+            <p>{{p.category}}</p>
+            {{ p.title }}<br>
+            <b>{{ p.price | currency:'INR' }}</b>
+          </ion-label>
+          <ion-row slot="end" class="ion-no-padding ion-align-items-center" >
+            <ion-col size="5">
+              <ion-button (click)="addToCart($event, p)" fill="clear">
+                <ion-icon name="add" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-col>
+
+            <ion-col size="2">
+              {{ cart[p.id] || 0 }}
+            </ion-col>
+
+            <ion-col size="5">
+              <ion-button (click)="removeFromCart($event, p)" fill="clear" [disabled]="!cart[p.id] || cart[p.id] == 0">
+                <ion-icon name="remove" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+      </div>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="openCart()" color="secondary" #myfab>
+        <ion-icon name="cart"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <!-- <button (click)="auth.signOut()">sign out</button> -->
+  </ion-content>
+
+  <ion-content *ngIf="category==undefined">
+    <ion-list >
+      <div  *ngFor="let p of products "  >
+        <ion-item (click)="openProductPage(p)" joyrideStep="step5" title="Product" text="click on card to view the product">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="p.image"></ion-img>
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap">
+            <p>{{p.category}}</p>
+            {{ p.title }}<br>
+            <b>{{ p.price | currency:'INR' }}</b>
+          </ion-label>
+          <ion-row slot="end" class="ion-no-padding ion-align-items-center">
+            <ion-col size="5">
+              <ion-button (click)="addToCart($event, p)" fill="clear"  joyrideStep="step6"  title="Add item " text="click on - to remove item from cart">
+                <ion-icon name="add" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-col>
+
+            <ion-col size="2">
+              {{ cart[p.id] || 0 }}
+            </ion-col>
+
+            <ion-col size="5">
+              <ion-button (click)="removeFromCart($event, p)" fill="clear" [disabled]="!cart[p.id] || cart[p.id] == 0"  joyrideStep="step7" title="Remove item " text="click on - to remove item from cart">
+                <ion-icon name="remove" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+      </div>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="openCart()" color="secondary" #myfab joyrideStep="step8" title="Cart" text="click on cart button to see your cart" >
+        <ion-icon name="cart"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <!-- <button (click)="auth.signOut()">sign out</button> -->
+  </ion-content>

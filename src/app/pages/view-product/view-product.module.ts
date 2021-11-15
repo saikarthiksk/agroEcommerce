@@ -1,0 +1,25 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { ViewProductPageRoutingModule } from './view-product-routing.module';
+
+import { ViewProductPage } from './view-product.page';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { JoyrideModule } from 'ngx-joyride';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    ViewProductPageRoutingModule,
+    ComponentsModule,
+    JoyrideModule.forChild()
+
+  ],
+  declarations: [ViewProductPage]
+})
+export class ViewProductPageModule {}
