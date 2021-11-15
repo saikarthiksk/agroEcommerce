@@ -42,34 +42,34 @@
       </div>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds" (click)="route('Seeds')" joyrideStep="step3" title="View Products" #seed [text]="setContent[2]"
+      <div class="seeds" (click)="route('Crops Seeds')" joyrideStep="step3" title="View Products" #seed [text]="setContent[2]"
         (next)="scrollView('viewAll')">
         <ion-img class="seedsImg" src="assets/img/seeds/organic.jpg"></ion-img>
         <p>Crop Seeds</p>
       </div>
-      <div class="seeds" (click)="route('Seeds')">
+      <div class="seeds" (click)="route('Forage Seeds')">
         <ion-img class="seedsImg" src="assets/img/forage.png"></ion-img>
         <p>Forage Seeds</p>
       </div>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds" (click)="route('Seeds')">
+      <div class="seeds" (click)="route('Vegetables')">
         <ion-img class="seedsImg" src="assets/img/seeds/tomato.jpg"></ion-img>
-        <p>Vegatables Seeds</p>
+        <p>Vegatables</p>
       </div>
       <div class="seeds" (click)="route('Machines')">
-        <ion-img class="seedsImg" src="assets/img/spray.jpg"></ion-img>
+        <ion-img class="seedsImg" src="assets/img/machines/engine.png"></ion-img>
         <p>Spray parts</p>
       </div>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds">
+      <div class="seeds" (click)="route('Fruits')">
         <ion-img class="seedsImg" src="assets/img/categories/cat-1.jpg"></ion-img>
         <p>Fruits</p>
       </div>
-      <div class="seeds" (click)="route('Vegetables')">
-        <ion-img class="seedsImg" src="assets/img/categories/cat-3.jpg"></ion-img>
-        <p>Vegatables</p>
+      <div class="seeds" (click)="route('Fertilizers')">
+        <ion-img class="seedsImg" src="assets/img/spray.jpg"></ion-img>
+        <p>Fertilizers</p>
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@
         <ion-text class="headings">Crop Seeds</ion-text>
         <p>Hybrids & improved seeds</p>
       </div>
-      <button slot="end" class="viewAll" joyrideStep="step4" title="View All" [text]="setContent[3]" #viewAll>View
+      <button slot="end" class="viewAll" joyrideStep="step4" title="View All" [text]="setContent[3]" #viewAll (click)="route('Crops Seeds')">View
         All</button>
     </div>
     <div lines="none" class="d-flex justify-content-center">
@@ -110,7 +110,7 @@
       <div>
         <ion-text class="headings">Vegetables</ion-text>
       </div>
-      <button slot="end" class="viewAll">View All</button>
+      <button slot="end" class="viewAll" (click)="route('Vegetables')">View All</button>
     </div>
     <div lines="none" class="d-flex justify-content-center">
       <div class="seeds">
@@ -139,7 +139,7 @@
       <div>
         <ion-text class="headings">Machinary</ion-text>
       </div>
-      <button slot="end" class="viewAll">View All</button>
+      <button slot="end" class="viewAll" (click)="route('Machines')">View All</button>
     </div>
     <div lines="none" class="d-flex justify-content-center">
       <div class="seeds">

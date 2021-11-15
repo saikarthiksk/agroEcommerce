@@ -1,10 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Animation, AnimationController, ModalController } from '@ionic/angular';
+import { Animation, AnimationController, LoadingController, ModalController } from '@ionic/angular';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { ProductService } from 'src/app/services/product.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { Products } from 'src/app/models/products';
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
@@ -19,11 +18,10 @@ export class ProductsPage implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private animationCtrl: AnimationController,
     private modalCtrl: ModalController,
-    private afs: AngularFirestore,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loadingController:LoadingController
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -60,6 +58,7 @@ export class ProductsPage implements OnInit {
         },
       ];
     }
+    this.presentLoading();
   }
 
   addToCart(event, product) {
@@ -106,5 +105,17 @@ export class ProductsPage implements OnInit {
         });
       }
     });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 }
