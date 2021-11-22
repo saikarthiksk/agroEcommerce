@@ -46,7 +46,7 @@
       <div *ngIf="r.productId==product.id" class="message">{{r.review}} </div>
     </div>
   </div>
-  <app-star-review [id]="product.id" joyrideStep="step9" title="Review" text="You can add your review here" ></app-star-review>
+  <app-star-review *ngIf="userCanRate" [id]="product.id" joyrideStep="step9" title="Review" text="You can add your review here" ></app-star-review>
 </ion-card>
 
 </ion-content>
