@@ -1,18 +1,17 @@
 import {Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import {  NavigationExtras, Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 import { JoyrideService } from 'ngx-joyride';
 import { JoyrideOptions } from 'ngx-joyride/lib/models/joyride-options.class';
 import { AlertController } from '@ionic/angular';
-import { first } from 'rxjs/operators';
 import { AngularFirestore,  } from '@angular/fire/compat/firestore';
+import { SampleDataService } from 'src/app/services/sample-data.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-
 export class HomePage implements OnInit {
   @ViewChild('categories') categoryDiv: ElementRef;
   @ViewChild('myfab', { read: ElementRef }) carBtn: ElementRef;
@@ -22,7 +21,10 @@ export class HomePage implements OnInit {
   cart = {};
   cartLen = [];
   products;
-  searchTerm:string;
+  data;
+  allProducts;
+  mostBoughtItems = [];
+  searchTerm: string;
   public foodList: any[];
   public foodListBackup: any[];
 
@@ -30,9 +32,12 @@ export class HomePage implements OnInit {
     private productService: ProductService,
     private router: Router,
     private joyRide: JoyrideService,
-    private alert:AlertController,
-    private afs:AngularFirestore
-  ) {}
+    private alert: AlertController,
+    private afs: AngularFirestore,
+    private sampleData: SampleDataService
+  ) {
+    this.data = this.sampleData.getSampleData();
+  }
 
   async ngOnInit() {
     const stored = await localStorage.getItem('key');
@@ -56,8 +61,8 @@ export class HomePage implements OnInit {
         this.startTour();
       }, 2000);
     }
-
-   }
+    this.initializeItems();
+  }
 
   route(data) {
     const extra: NavigationExtras = {
@@ -86,7 +91,7 @@ export class HomePage implements OnInit {
         'step13@home',
       ],
       showCounter: false,
-      waitingTime:500
+      waitingTime: 500,
     };
     this.joyRide.startTour(options);
   }
@@ -96,7 +101,7 @@ export class HomePage implements OnInit {
     'Click on the image to see particular products',
     'Click on View all for all related products',
     'click on the search button to search for a product',
-    'click on the ? to get the tour again'
+    'click on the ? to get the tour again',
   ];
 
   scrollView(data) {
@@ -106,13 +111,13 @@ export class HomePage implements OnInit {
         block: 'start',
       });
     }
-    if (data == 'category'){
+    if (data == 'category') {
       this.categoryDiv.nativeElement.scrollIntoView({
         behavior: 'auto',
         block: 'start',
       });
     }
-    if (data == 'seed'){
+    if (data == 'seed') {
       this.seedDiv.nativeElement.scrollIntoView({
         behavior: 'auto',
         block: 'start',
@@ -120,23 +125,57 @@ export class HomePage implements OnInit {
     }
   }
 
-  async finishTour(){
-    const alertModal= await this.alert.create({
-      header:'You got it',
-      message:'Enjoy using our app!',
-      buttons:[
+  async finishTour() {
+    const alertModal = await this.alert.create({
+      header: 'You got it',
+      message: 'Enjoy using our app!',
+      buttons: [
         {
-          text:'Ok',
-          handler:async ()=>{
+          text: 'Ok',
+          handler: async () => {
             await localStorage.setItem('key', 'done');
-          }
-        }
-      ]
-    })
+          },
+        },
+      ],
+    });
     await alertModal.present();
   }
 
-   openSearch() {
+  openSearch() {
     this.router.navigate(['search']);
+  }
+
+  openProductPage(item) {
+    const navExtra: NavigationExtras = {
+      state: {
+        product: item,
+      },
+    };
+    this.router.navigate(['view-product'], navExtra);
+  }
+
+  async initializeItems(): Promise<any> {
+    const productsList = await this.afs
+      .collection('products')
+      .valueChanges()
+      .pipe(first())
+      .toPromise();
+    this.allProducts = productsList;
+    setTimeout(async () => {
+      await this.getMostBoughtProduct();
+    }, 2000);
+    console.log(productsList);
+    return productsList;
+  }
+
+  async getMostBoughtProduct() {
+    let len = this.allProducts.length;
+    for (let index = 0; index < len; index++) {
+      const element = this.allProducts[index];
+      if (element.purchases>=2) {
+        this.mostBoughtItems.push(element);
+      }
     }
+  }
+
 }

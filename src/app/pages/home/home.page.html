@@ -42,8 +42,8 @@
       </div>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds" (click)="route('Crops Seeds')" joyrideStep="step3" title="View Products" #seed [text]="setContent[2]"
-        (next)="scrollView('viewAll')">
+      <div class="seeds" (click)="route('Crops Seeds')" joyrideStep="step3" title="View Products" #seed
+        [text]="setContent[2]" (next)="scrollView('viewAll')">
         <ion-img class="seedsImg" src="assets/img/seeds/organic.jpg"></ion-img>
         <p>Crop Seeds</p>
       </div>
@@ -80,27 +80,28 @@
         <ion-text class="headings">Crop Seeds</ion-text>
         <p>Hybrids & improved seeds</p>
       </div>
-      <button slot="end" class="viewAll" joyrideStep="step4" title="View All" [text]="setContent[3]" #viewAll (click)="route('Crops Seeds')">View
+      <button slot="end" class="viewAll" joyrideStep="step4" title="View All" [text]="setContent[3]" #viewAll
+        (click)="route('Crops Seeds')">View
         All</button>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds">
-        <ion-img class="seedsImg" src="assets/img/seeds/organic.jpg"></ion-img>
-        <p>organic</p>
+      <div class="seeds" (click)="openProductPage(data[0])">
+        <ion-img class="seedsImg" [src]="data[0].image"></ion-img>
+        <p>{{data[0].title}}</p>
       </div>
-      <div class="seeds">
-        <ion-img class="seedsImg" src="assets/img/seeds/organic.jpg"></ion-img>
-        <p>organic</p>
+      <div class="seeds" (click)="openProductPage(data[1])">
+        <ion-img class="seedsImg" [src]="data[1].image"></ion-img>
+        <p>{{data[1].title}}</p>
       </div>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds">
-        <ion-img class="seedsImg" src="assets/img/seeds/peas.jpg"></ion-img>
-        <p>Peas</p>
+      <div class="seeds" (click)="openProductPage(data[2])">
+        <ion-img class="seedsImg" [src]="data[2].image"></ion-img>
+        <p>{{data[2].title}}</p>
       </div>
-      <div class="seeds">
-        <ion-img class="seedsImg" src="assets/img/seeds/tomato.jpg"></ion-img>
-        <p>Tomato</p>
+      <div class="seeds" (click)="openProductPage(data[3])">
+        <ion-img class="seedsImg" [src]="data[3].image"></ion-img>
+        <p>{{data[3].title}}</p>
       </div>
     </div>
   </div>
@@ -113,23 +114,23 @@
       <button slot="end" class="viewAll" (click)="route('Vegetables')">View All</button>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds">
-        <ion-img src="assets/img/vegetables/Greencollard.jpg"></ion-img>
-        <p class="vegetablesText">Green collard</p>
+      <div class="seeds" (click)="openProductPage(data[4])">
+        <ion-img [src]="data[4].image"></ion-img>
+        <p class="vegetablesText">{{data[4].title}}</p>
       </div>
-      <div class="seeds">
-        <ion-img src="assets/img/vegetables/Onion-Yellow.jpg"></ion-img>
-        <p class="vegetablesText">Yellow onion</p>
+      <div class="seeds" (click)="openProductPage(data[5])">
+        <ion-img [src]="data[5].image"></ion-img>
+        <p class="vegetablesText">{{data[5].title}}</p>
       </div>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds">
-        <ion-img src="assets/img/vegetables/garlic.jpg"></ion-img>
-        <p class="vegetablesText">Garlic</p>
+      <div class="seeds" (click)="openProductPage(data[6])">
+        <ion-img [src]="data[6].image"></ion-img>
+        <p class="vegetablesText">{{data[6].title}}</p>
       </div>
-      <div class="seeds">
-        <ion-img src="assets/img/vegetables/Brinjal.jpg"></ion-img>
-        <p class="vegetablesText">Brinjal </p>
+      <div class="seeds" (click)="openProductPage(data[7])">
+        <ion-img [src]="data[7].image"></ion-img>
+        <p class="vegetablesText">{{data[7].title}} </p>
       </div>
     </div>
   </div>
@@ -142,23 +143,41 @@
       <button slot="end" class="viewAll" (click)="route('Machines')">View All</button>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds">
-        <ion-img src="assets/img/machines/engine.png"></ion-img>
-        <p class="vegetablesText">Engine</p>
+      <div class="seeds" (click)="openProductPage(data[8])">
+        <ion-img [src]="data[8].image"></ion-img>
+        <p class="vegetablesText">{{data[8].title}}</p>
       </div>
-      <div class="seeds">
-        <ion-img src="assets/img/machines/spraypump.png"></ion-img>
-        <p class="vegetablesText">Spray pump</p>
+      <div class="seeds" (click)="openProductPage(data[9])">
+        <ion-img [src]="data[9].image"></ion-img>
+        <p class="vegetablesText">{{data[9].title}}</p>
       </div>
     </div>
     <div lines="none" class="d-flex justify-content-center">
-      <div class="seeds">
-        <ion-img src="assets/img/machines/trolley.png"></ion-img>
-        <p class="vegetablesText">Trolley</p>
+      <div class="seeds" (click)="openProductPage(data[10])">
+        <ion-img [src]="data[10].image"></ion-img>
+        <p class="vegetablesText">{{data[10].title}}</p>
       </div>
-      <div class="seeds">
-        <ion-img src="assets/img/machines/RotoSeedDrill.png"></ion-img>
-        <p class="vegetablesText">Roto Seed Drill </p>
+      <div class="seeds" (click)="openProductPage(data[11])">
+        <ion-img [src]="data[11].image"></ion-img>
+        <p class="vegetablesText">{{data[11].title}} </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cropSeeds p-1 mg10" *ngIf="mostBoughtItems!=undefined">
+    <div lines="none" class="d-flex  justify-content-between  align-items-center my-2 pd-5">
+      <div>
+        <ion-text class="headings">Most Bought Products</ion-text>
+      </div>
+    </div>
+    <div class="d-flex overflow">
+      <div *ngFor="let item of mostBoughtItems" class="d-flex " >
+        <div lines="none" *ngIf="item!=5e-324">
+          <div class="seeds" (click)="openProductPage(item)">
+            <ion-img [src]="item.image"></ion-img>
+            <p class="vegetablesText">{{item.title}} </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
