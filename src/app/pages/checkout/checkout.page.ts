@@ -4,14 +4,17 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { ProductService } from '../../services/product.service';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import firebase from '@firebase/app-compat';
+const INCREMENT = firebase.firestore.FieldValue.increment(1);
+const DECREMENT = firebase.firestore.FieldValue.increment(-1);
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
+  productsCollection: AngularFirestoreCollection;
   paymentViaCard=false;
   products;
   cart={};
@@ -32,7 +35,9 @@ export class CheckoutPage implements OnInit {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private router: Router,
-    private afs: AngularFirestore) { }
+    private afs: AngularFirestore) {
+    this.productsCollection = this.afs.collection('products');
+    }
 
   ngOnInit() {
     const cartItems = this.productService.cart.value;
@@ -66,6 +71,9 @@ export class CheckoutPage implements OnInit {
           title:this.products[index].title,
           price:this.products[index].price,
           uid: data
+        });
+        this.productsCollection.doc(this.products[index].id).update({
+          purchases: INCREMENT
         });
       }
       this.productService.checkoutCart();

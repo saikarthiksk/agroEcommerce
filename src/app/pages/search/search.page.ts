@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { NavigationExtras, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -12,7 +13,8 @@ export class SearchPage implements OnInit {
   public productsList: any[];
   public productsListBackup: any[];
   constructor(
-    private afs:AngularFirestore
+    private afs:AngularFirestore,
+    private router:Router
   ) { }
 
   async ngOnInit() {
@@ -42,6 +44,14 @@ export class SearchPage implements OnInit {
       });
     }
 
+  }
+  openProductPage(item) {
+    const navExtra: NavigationExtras = {
+      state: {
+        product: item,
+      },
+    };
+    this.router.navigate(['view-product'], navExtra);
   }
 
 }

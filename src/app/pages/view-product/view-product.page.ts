@@ -15,6 +15,8 @@ export class ViewProductPage implements OnInit {
   cart = {};
   product:Products;
   ratings;
+  userOrders;
+  userCanRate=false;
   constructor(private router:Router,
     private route:ActivatedRoute,
     private productService:ProductService,
@@ -25,9 +27,20 @@ export class ViewProductPage implements OnInit {
         this.product=this.router.getCurrentNavigation().extras.state.product;
       }
     });
-
    }
 
+   ionViewWillEnter(){
+    this.userOrders=this.productService.getOrders().subscribe((data)=>{
+      this.userOrders=data;
+      let len=this.userOrders.length;
+      for (let index = 0; index <len; index++) {
+        const element = this.userOrders[index];
+        if(this.product.id==element.productId){
+          this.userCanRate=true;
+        }
+      }
+    })
+   }
   ngOnInit() {
     this.ratings = this.productService.getRatings();
     this.productService.cart.subscribe((value) => {
@@ -60,4 +73,6 @@ export class ViewProductPage implements OnInit {
     });
     await modal.present();
   }
+
+
 }

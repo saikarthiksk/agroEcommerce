@@ -12,7 +12,7 @@
     <ion-searchbar showcancelbutton="" (ionInput)="filterList($event)"></ion-searchbar>
     <ion-list *ngIf="showResults==true">
       <div  *ngFor="let p of productsList"  >
-        <ion-item >
+        <ion-item (click)="openProductPage(p)">
           <ion-thumbnail slot="start">
             <ion-img [src]="p.image"></ion-img>
           </ion-thumbnail>
