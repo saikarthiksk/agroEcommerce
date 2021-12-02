@@ -45,6 +45,7 @@ export class AppComponent implements OnInit{
  async  logout(page){
     if(page.title=='Logout'){
       this.auth.logout();
+      await localStorage.removeItem('userId')
     }
     else if(page.title=='cart'){
       const modal = await this.modalCtrl.create({
