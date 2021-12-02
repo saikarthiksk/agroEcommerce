@@ -10,7 +10,7 @@
       </ion-button>
       <ion-icon name="help-circle-outline" class="cart" joyrideStep="step13" [text]="setContent[5]"
         (click)="startTour()" (done)="finishTour()"></ion-icon>
-      <ion-icon name="cart-outline" class="cart"></ion-icon>
+      <ion-icon name="cart-outline" class="cart" (click)="openCart()"></ion-icon>
       <ion-text class="count" *ngIf="cartLen.length!=0">{{cartLen.length}}</ion-text>
     </ion-buttons>
   </ion-toolbar>

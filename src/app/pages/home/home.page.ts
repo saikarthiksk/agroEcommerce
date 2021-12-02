@@ -4,9 +4,10 @@ import {  NavigationExtras, Router } from '@angular/router';
 import { first, take } from 'rxjs/operators';
 import { JoyrideService } from 'ngx-joyride';
 import { JoyrideOptions } from 'ngx-joyride/lib/models/joyride-options.class';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { AngularFirestore,  } from '@angular/fire/compat/firestore';
 import { SampleDataService } from 'src/app/services/sample-data.service';
+import { CartModalPage } from '../cart-modal/cart-modal.page';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -24,7 +25,6 @@ export class HomePage implements OnInit {
   data;
   allProducts;
   mostBoughtItems = [];
-  searchTerm: string;
   public foodList: any[];
   public foodListBackup: any[];
 
@@ -34,7 +34,8 @@ export class HomePage implements OnInit {
     private joyRide: JoyrideService,
     private alert: AlertController,
     private afs: AngularFirestore,
-    private sampleData: SampleDataService
+    private sampleData: SampleDataService,
+    private modalCtrl:ModalController
   ) {
     this.data = this.sampleData.getSampleData();
   }
@@ -176,6 +177,12 @@ export class HomePage implements OnInit {
         this.mostBoughtItems.push(element);
       }
     }
+  }
+  async openCart() {
+    const modal = await this.modalCtrl.create({
+      component: CartModalPage,
+    });
+    await modal.present();
   }
 
 }
